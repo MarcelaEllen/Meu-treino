@@ -2,7 +2,8 @@
 // Se você mudar ESTE arquivo ou a lista de arquivos do app, troque a versão abaixo.
 // Mudanças só no conteúdo do index.html, css ou js NÃO precisam trocar a versão:
 // o app sempre tenta buscar a versão nova primeiro.
-const VERSION = 'v3';
+importScripts('js/config.js');
+const VERSION = 'v4';
 const APP = 'meu-treino-app-' + VERSION;
 const EXT = 'meu-treino-ext-' + VERSION;
 const SCOPE = new URL('./', self.location).pathname;
@@ -11,7 +12,7 @@ const APP_FILES = [
   './', './index.html', './manifest.json', './icon-192.png', './icon-512.png',
   './css/estilo.css',
   './js/dados.js', './js/util.js', './js/hoje.js', './js/treino.js', './js/progresso.js',
-  './js/mais.js', './js/pdf.js', './js/avisos.js', './js/app.js',
+  './js/mais.js', './js/pdf.js', './js/avisos.js', './js/app.js', './js/config.js',
 ];
 const PDF_LIB = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
 const FONT_CSS = 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap';
@@ -158,7 +159,7 @@ function dias(a, b) { return Math.round((new Date(b + 'T12:00:00') - new Date(a 
 async function lembretes() {
   const d = await abrirDB();
   const c = await ler(d, 'cfg');
-  if (!c || !c.on) return;
+  if (!c || !c.on || c.push) return; // com o servidor ligado, quem manda os lembretes é ele
   const agora = new Date();
   if (agora.getHours() < 8 || agora.getHours() >= 21) return;
   const hoje = dia(agora);
@@ -192,6 +193,20 @@ async function lembretes() {
 
 self.addEventListener('periodicsync', (e) => {
   if (e.tag === 'lembretes') e.waitUntil(lembretes().catch(() => {}));
+});
+
+// Push do servidor: chega vazio e o texto é buscado no próprio servidor.
+self.addEventListener('push', (e) => {
+  e.waitUntil((async () => {
+    let msgs = [];
+    try {
+      const s = await self.registration.pushManager.getSubscription();
+      const r = await fetch(PUSH_URL.replace(/\/+$/, '') + '/msg', { method: 'POST', headers: { 'content-type': 'text/plain' }, body: JSON.stringify({ endpoint: s.endpoint }) });
+      msgs = (await r.json()).msgs || [];
+    } catch (err) {}
+    if (!msgs.length) msgs = [{ title: 'Meu treino', body: 'Você tem um aviso. Toque pra abrir.', tag: 'geral', tab: '' }];
+    for (const m of msgs) await mostrar(m.title, m.body, m.tag, m.tab);
+  })());
 });
 
 // Tocar na notificação: abre o app (ou traz pra frente) na aba certa.

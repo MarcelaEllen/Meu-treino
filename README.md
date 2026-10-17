@@ -7,6 +7,7 @@ App pessoal de treino, água e progresso. Site estático (GitHub Pages), funcion
 | Arquivo | O que tem |
 |---|---|
 | `index.html` | Estrutura da página e a ordem dos scripts |
+| `js/config.js` | Endereço e chave pública do servidor de notificações |
 | `css/estilo.css` | Todo o visual (cores, modo escuro, componentes) |
 | `js/dados.js` | Estado, salvar/carregar, fotos (IndexedDB), backup, desfazer |
 | `js/util.js` | Datas, formatação, ícones, tema, avisos no topo, modal, edição |
@@ -25,3 +26,7 @@ App pessoal de treino, água e progresso. Site estático (GitHub Pages), funcion
 - A ordem dos `<script>` no `index.html` importa: `app.js` sempre por último.
 - Criou ou renomeou um arquivo? Atualize a lista `APP_FILES` no `sw.js` e troque a `VERSION`.
 - Mudou só o conteúdo de um arquivo? Não precisa mexer no `sw.js`.
+
+## Notificações pelo servidor
+
+O servidor fica na pasta `push-server` (Cloudflare Worker), separada deste repositório. Depois de publicá-lo, preencha `js/config.js` com o endereço e a **chave pública**. A chave privada nunca entra aqui.
