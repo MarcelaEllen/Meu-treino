@@ -5,7 +5,7 @@ var sub=S.tab=='sup'||S.tab=='con'||S.tab=='aj',t=ROUTES.filter(function(x){retu
 $('#app').innerHTML=(sub?'<button class="btn g sm" data-a="t:mais" style="margin-bottom:6px">‹ Mais</button>':'')+t[3]();
 $('#nav').innerHTML=TABS.map(function(x){return'<button class="'+(x[0]==act?'on':'')+'" data-a="t:'+x[0]+'"><b>'+ico(x[1],22)+'</b>'+x[2]+'</button>'}).join('');wake();moveEb();drawFoco();showToast()}
 document.addEventListener('input',function(e){var f=e.target.dataset.f;if(!f)return;var p=f.split(':'),v=e.target.value;
-if(p[0]=='nt'){S.nt=S.nt||{};S.nt[TODAY]=S.nt[TODAY]||{};S.nt[TODAY][p[1]]=v}else if(p[0]=='pl')S.plan[p[1]]=v;else if(p[0]=='evx')S.ev=v;else if(p[0]=='evf')S.evf=v;else if(p[0]=='wkg')S.ws.kg=v;else if(p[0]=='fd')F.d=v;else if(p[0]=='mv')F.v[p[1]]=v;else{var x=fx(p[1]),fl={k:'kg',r:'reps',d:'rr',e:'rpe'}[p[0]];if(x&&x.s[p[2]])x.s[p[2]][fl]=v;var DD=S.dn[TODAY];if(DD)for(var wi in DD){var qq=DD[wi][p[1]+':'+p[2]];if(qq&&typeof qq=='object')qq[fl]=v}}save()});
+if(p[0]=='nt'){S.nt=S.nt||{};S.nt[TODAY]=S.nt[TODAY]||{};S.nt[TODAY][p[1]]=v}else if(p[0]=='pl')S.plan[p[1]]=v;else if(p[0]=='evx')S.ev=v;else if(p[0]=='evf')S.evf=v;else if(p[0]=='nth')S.nth=parseInt(v)||18;else if(p[0]=='wkg')S.ws.kg=v;else if(p[0]=='fd')F.d=v;else if(p[0]=='mv')F.v[p[1]]=v;else{var x=fx(p[1]),fl={k:'kg',r:'reps',d:'rr',e:'rpe'}[p[0]];if(x&&x.s[p[2]])x.s[p[2]][fl]=v;var DD=S.dn[TODAY];if(DD)for(var wi in DD){var qq=DD[wi][p[1]+':'+p[2]];if(qq&&typeof qq=='object')qq[fl]=v}}save()});
 document.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!b)return;var a=b.dataset.a.split(':'),y=a[0],sc=window.scrollY,w=cw();
 if(y=='t'){S.tab=a[1];ED=false;EDK=null;sc=0;if(a[1]=='treino'&&S.wkd!=TODAY){S.wkd=TODAY;var pp=(S.plan||{})[new Date().getDay()];if(pp&&S.w.some(function(z){return z.id==pp}))S.wk=pp}}
 else if(y=='ed'){ED=!ED}
@@ -113,7 +113,7 @@ if(!S.start){S.start=startD();save()}
 S.tab='hoje';var h0=(location.hash||'').slice(1);if(['hoje','treino','agua','prog','mais'].indexOf(h0)>-1){S.tab=h0;try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
 render();
 try{navigator.serviceWorker.addEventListener('message',function(e){var d=e.data||{};if(d.t=='abrir'&&d.tab){S.tab=d.tab;ED=false;render();window.scrollTo(0,0)}})}catch(e){}
-if(ntOn())ntPeriodic();
+if(ntOn()){ntPeriodic();pushSub()}
 try{if('serviceWorker' in navigator&&location.protocol=='https:')navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}catch(e){}
 window.addEventListener('offline',function(){toast('Sem internet. O app continua funcionando normalmente.');showToast()});
 window.addEventListener('online',function(){toast('Internet de volta.');showToast()});
