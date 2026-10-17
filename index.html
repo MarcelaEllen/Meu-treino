@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Meu treino</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6D3FC0">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Meu treino">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap">
 <style>
 :root{--bg:#F4F3F8;--surf:#fff;--ink:#1D1B2E;--mut:#6B6880;--line:#E2E0EC;--acc:#6D3FC0;--acc2:#EDE6FA;--ok:#1F8A5B;--warn:#B4551B;--warnbg:#FBEBDD;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -719,6 +727,7 @@ var sv='<svg width="112" height="112" viewBox="0 0 112 112" aria-hidden="true" s
 return'<div class="card ringc">'+sv+'<div class="sp">'+R.map(function(z){return'<button class="rgl" data-a="'+z.a+'"><i style="background:'+z.c+'"></i><span class="sp"><span style="display:block;font-weight:600">'+z.l+(z.v>=1?' ✓':'')+'</span><span class="mut" style="font-size:13px">'+z.t+'</span></span>'+ico('chev',14)+'</button>'}).join('')+'</div></div>'}
 
 S.tab='hoje';render();
+try{if('serviceWorker' in navigator&&location.protocol=='https:')navigator.serviceWorker.register('sw.js').catch(function(){})}catch(e){}
 </script>
 </body>
 </html>
