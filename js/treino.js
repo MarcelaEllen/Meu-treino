@@ -48,7 +48,6 @@ h+='</div>'+(S.w.length>1?'<p class="mut" style="font-size:12px;margin:2px 0 0">
 h+=utabs('tp',TPG,[['t','Treino'],['h','Histórico']]);if(TPG=='h')return h+hist();if(!w)return h+'<p class="mut" style="margin-top:12px">Nenhum treino. Toque em Editar e depois em + Treino.</p>';
 var c=cnt(TODAY,w.id),t=tot(w);
 h+='<div class="bar"><i style="width:'+(t?c/t*100:0)+'%"></i></div><div class="row"><span class="sp mut">'+(w.d?esc(w.d)+'. ':'')+c+' de '+t+' séries hoje</span><button class="lnk" data-a="fmo">Modo foco</button><button class="lnk" data-a="'+(w.e.every(function(x){return opens(w)[x.id]})?'xc':'xa')+'">'+(w.e.every(function(x){return opens(w)[x.id]})?'Recolher tudo':'Expandir tudo')+'</button></div>';
-if(ED)h+=addb('ex','Exercício');
 var OP=opens(w),dica=!Object.keys(S.dn).some(function(d){return Object.keys(S.dn[d]).some(function(k){return Object.keys(S.dn[d][k]).length})}),grip='<span class="grip" data-grip="1" role="button" aria-label="Arrastar pra mudar a ordem" title="Arrastar pra mudar a ordem">'+ico('grip',18)+'</span>';
 h+='<div id="exlist">';
 w.e.forEach(function(x,xi){if(!ED&&!OP[x.id]){var dn=x.s.filter(function(s,i){return !s.wu&&isd(w.id,x.id,i)}).length,tn=x.s.filter(nw).length;h+='<div class="exw exc" data-dx="'+xi+'">'+grip+'<button class="mr" data-a="xo:'+x.id+'"><span class="sp" style="min-width:0"><b>'+esc(x.n)+'</b><span class="mgl">'+esc(mgOf(x))+'</span></span>'+tagPill(x.tag)+(isT(x)?'<span class="pill tyb t">'+ico('clock',12)+' Tempo</span>':'')+'<span class="mut">'+dn+'/'+tn+(dn==tn?' ✓':'')+'</span>'+ico('chev',16)+'</button></div>';return}
@@ -57,7 +56,7 @@ ordr(x).forEach(function(i){h+=setRow(w,x,i)});
 if(ED)h+='<div class="row i" style="flex-wrap:wrap"><button class="btn g sm" data-a="as:'+x.id+'">+ série</button><button class="btn g sm" data-a="rsx:'+x.id+'">− série</button><button class="btn g sm" data-a="aw:'+x.id+'">+ aquec.</button><button class="btn g sm" data-a="rw:'+x.id+'">− aquec.</button><span class="sp"></span>'+ctl('ex',x.id)+'</div>';
 h+='</div>'});
 h+='</div>';
-if(ED)h+=addb('ex','Exercício')+'<button class="btn g sm eb" data-a="dupw:'+w.id+'">'+ico('copy')+' Duplicar treino</button><button class="btn g sm eb" data-a="e:wk:'+w.id+'">'+ico('pen')+' Renomear treino</button><button class="btn g sm eb" data-a="x:wk:'+w.id+'">'+ico('trash')+' Excluir treino</button>';
+if(ED)h+='<button class="btn sm" data-a="n:ex" style="margin-top:8px">+ Exercício</button>'+addb('ex','Exercício')+'<button class="btn g sm eb" data-a="dupw:'+w.id+'">'+ico('copy')+' Duplicar treino</button><button class="btn g sm eb" data-a="e:wk:'+w.id+'">'+ico('pen')+' Renomear treino</button><button class="btn g sm eb" data-a="x:wk:'+w.id+'">'+ico('trash')+' Excluir treino</button>';
 else h+='<button class="btn g sm eb" data-a="n:ex">+ Adicionar exercício</button><div class="row" style="justify-content:center;flex-wrap:wrap"><button class="lnk" data-a="rp">'+ico('redo',14)+' Repetir pesos do último treino</button><button class="lnk" data-a="rs">Limpar marcadas</button><button class="lnk" data-a="shr">'+ico('share',14)+' Compartilhar dados</button></div>';
 h+='<div class="card"><label for="ntx">Como foi o treino de hoje?</label><input id="ntx" type="text" data-f="nt:'+w.id+'" placeholder="Ex: joelho ok, subi a carga no stiff" value="'+esc(((S.nt||{})[TODAY]||{})[w.id]||'')+'"></div>';
 return h}
