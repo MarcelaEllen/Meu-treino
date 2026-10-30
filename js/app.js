@@ -10,7 +10,7 @@ document.addEventListener('pointermove',function(e){if(!DR||e.pointerId!==DR.id)
 e.preventDefault();var it=DR.item,ax=DR.ax,p=ax=='y'?e.clientY:e.clientX,tgt=0;DR.list.forEach(function(s){if(s===it)return;var r=s.getBoundingClientRect(),m=ax=='y'?r.top+r.height/2:r.left+r.width/2;if(m<p)tgt++});
 var cur=DR.list.indexOf(it);if(tgt!==cur){DR.list.splice(cur,1);DR.list.splice(tgt,0,it);var nx=DR.list[tgt+1],pv=DR.list[tgt-1];it.parentElement.insertBefore(it,nx||(pv?pv.nextSibling:null))}
 var nat=dragPos(it,ax)-DR.tr;DR.tr=p-DR.off-nat;it.style.transform=ax=='y'?'translateY('+DR.tr+'px)':'translateX('+DR.tr+'px)';
-if(ax=='y'){if(e.clientY<70)window.scrollBy(0,-12);else if(e.clientY>window.innerHeight-70)window.scrollBy(0,12)}},{passive:false});
+if(ax=='y'){if(e.clientY<70)window.scrollBy(0,-12);else if(e.clientY>window.innerHeight-70)window.scrollBy(0,12)}else{var tc=it.parentElement,cr=tc.getBoundingClientRect();if(e.clientX<cr.left+36)tc.scrollLeft-=10;else if(e.clientX>cr.right-36)tc.scrollLeft+=10}},{passive:false});
 function dragEnd(e){if(!DR||(e&&e.pointerId!==DR.id))return;var st=DR;DR=null;clearTimeout(st.t);if(!st.on)return;var at=st.kind=='ex'?'data-dx':'data-dw',idx=st.list.map(function(el){return parseInt(el.getAttribute(at))});
 st.item.classList.remove('drg');st.item.style.transform='';document.body.classList.remove('dragging');DRJ=Date.now();var mudou=idx.some(function(v,i){return v!==i});if(mudou){reordenar(st.kind,idx);toast(st.kind=='ex'?'Ordem dos exercícios salva':'Ordem dos treinos salva')}render()}
 document.addEventListener('pointerup',dragEnd);document.addEventListener('pointercancel',dragEnd);
