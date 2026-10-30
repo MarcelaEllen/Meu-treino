@@ -148,3 +148,6 @@ body.fm #rest,body.fm #exb{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
 .tabs button.drg{position:relative;z-index:15;box-shadow:0 10px 22px -8px rgba(0,0,0,.4);transition:none!important;will-change:transform}
 body.dragging .tabs{scroll-behavior:auto}
 body.dragging{user-select:none;-webkit-user-select:none;cursor:grabbing}
+
+/* personalizar início */
+.exw.hcr{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surf);border-radius:12px;padding:4px 10px 4px 2px;margin:6px 0;min-height:48px}
