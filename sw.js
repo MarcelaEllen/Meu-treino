@@ -167,10 +167,10 @@ async function lembretes() {
   let mudou = false;
 
   if (c.f.idle && c.lb && c.lt) {
-    const n = dias(c.lt, hoje);
-    if (n >= c.ld && st.idle !== hoje) {
+    const n = dias(c.lt, hoje) - 1; // dias inteiros sem treino, sem contar hoje
+    if (n >= 1 && n >= c.ld && st.idle !== hoje) {
       const w = (c.pl || {})[agora.getDay()];
-      await mostrar('Faz ' + n + ' dias sem treinar', w ? 'Hoje é dia de ' + w + '. Bora?' : 'Que tal um treino leve hoje?', 'parado', 'treino');
+      await mostrar('Você está há ' + n + (n === 1 ? ' dia' : ' dias') + ' sem treinar', w ? 'Hoje é dia de ' + w + '. Bora?' : 'Que tal um treino leve hoje?', 'parado', 'treino');
       st.idle = hoje; mudou = true;
     }
   }
